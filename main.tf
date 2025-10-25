@@ -7,6 +7,16 @@ terraform {
   }
 }
 
+provider "vercel" {
+  api_token = var.vercel_api_token
+}
+
+variable "vercel_api_token" {
+  description = "Vercel API token"
+  type        = string
+  sensitive   = true
+}
+
 resource "vercel_project" "nuxt_social_media" {
   name      = "nuxt-social-media"
   framework = "nuxtjs"
@@ -15,6 +25,11 @@ resource "vercel_project" "nuxt_social_media" {
     type = "github"
     repo = "ettouzany/nuxt-social-media"
   }
+  
+  build_command    = "npm run build"
+  output_directory = ".output/public"
+  install_command  = "npm install"
+  root_directory   = ""
 }
 
 # Note: Vercel Blob stores need to be created manually via:
